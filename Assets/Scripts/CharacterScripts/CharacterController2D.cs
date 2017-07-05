@@ -32,7 +32,7 @@ public class CharacterController2D : MonoBehaviour {
         HandleHorizontalSpeed();
         HandleSwitchingDirections();
 
-        if (Input.GetButton("Jump") && groundCheck.StandingOn(Tags.GROUND))
+        if (Input.GetButton("Jump") && groundCheck.OnLayer(Tags.GROUND_LAYER))
         {
             rb.AddForce(Vector2.up * jumpPower);
         }
@@ -61,7 +61,7 @@ public class CharacterController2D : MonoBehaviour {
         {
             speed = speed + acceleration * Mathf.Sign(horizontalAxis);
             speed = Mathf.Abs(speed) > Mathf.Abs(maxSpeedX) ? maxSpeedX * Mathf.Sign(horizontalAxis) : speed;
-            rb.velocity = new Vector2(speed, groundCheck.StandingOn(Tags.GROUND) ? 0 : rb.velocity.y);
+            rb.velocity = new Vector2(speed, groundCheck.OnLayer(Tags.GROUND_LAYER) ? 0 : rb.velocity.y);
         }
         else
         {

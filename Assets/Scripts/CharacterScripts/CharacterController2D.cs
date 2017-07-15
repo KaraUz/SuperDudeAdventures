@@ -28,19 +28,19 @@ public class CharacterController2D : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!wasOnGround && groundCheck.OnLayer(Tags.GROUND_LAYER)){
+        if (!wasOnGround && groundCheck.OnLayer(Layers.GROUND)){
             speed = speed/2;
         }
        // timeSinceJump += Time.deltaTime;
        // if (timeSinceJump > jumpCooldown)
        // {
         timeSinceJump = 0;
-        if (Input.GetButtonDown("Jump") && groundCheck.OnLayer(Tags.GROUND_LAYER))
+        if (Input.GetButtonDown("Jump") && groundCheck.OnLayer(Layers.GROUND))
         {
             rb.AddForce(Vector2.up * jumpPower);
         }
         // }
-        wasOnGround = groundCheck.OnLayer(Tags.GROUND_LAYER);
+        wasOnGround = groundCheck.OnLayer(Layers.GROUND);
     }
 
     void FixedUpdate()
@@ -72,7 +72,7 @@ public class CharacterController2D : MonoBehaviour {
         {
             speed = speed + acceleration * Mathf.Sign(horizontalAxis);
             speed = Mathf.Abs(speed) > Mathf.Abs(maxSpeedX) ? maxSpeedX * Mathf.Sign(horizontalAxis) : speed;
-            rb.velocity = new Vector2(speed, groundCheck.OnLayer(Tags.GROUND_LAYER) ? 0 : rb.velocity.y);
+            rb.velocity = new Vector2(speed, groundCheck.OnLayer(Layers.GROUND) ? 0 : rb.velocity.y);
         }
         else
         {

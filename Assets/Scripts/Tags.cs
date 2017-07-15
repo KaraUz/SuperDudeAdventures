@@ -4,6 +4,5 @@
     public static string PLAYER = "Player";
     public static string ENEMY = "Enemy";
     public static string GROUND_CHECK = "GroundCheck";
-    public static string GROUND_LAYER = "GroundLayer";
-
+    public static string HAZARD = "Hazard";
 }

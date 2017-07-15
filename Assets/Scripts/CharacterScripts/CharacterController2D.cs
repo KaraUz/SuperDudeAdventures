@@ -11,9 +11,13 @@ public class CharacterController2D : MonoBehaviour {
     public float maxSpeedX = 1;
     public float acceleration = 0.1f;
     public float jumpPower = 1;
+    public float jumpCooldown = 1f;
 
     private float speed;
     private bool facingRight = true;
+    private float timeSinceJump = 0;
+    private bool wasOnGround = false;
+
 
     // Use this for initialization
     void Start () {
@@ -24,18 +28,25 @@ public class CharacterController2D : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-	}
+        if (!wasOnGround && groundCheck.OnLayer(Tags.GROUND_LAYER)){
+            speed = speed/2;
+        }
+       // timeSinceJump += Time.deltaTime;
+       // if (timeSinceJump > jumpCooldown)
+       // {
+        timeSinceJump = 0;
+        if (Input.GetButtonDown("Jump") && groundCheck.OnLayer(Tags.GROUND_LAYER))
+        {
+            rb.AddForce(Vector2.up * jumpPower);
+        }
+        // }
+        wasOnGround = groundCheck.OnLayer(Tags.GROUND_LAYER);
+    }
 
     void FixedUpdate()
     {
         HandleHorizontalSpeed();
         HandleSwitchingDirections();
-
-        if (Input.GetButton("Jump") && groundCheck.OnLayer(Tags.GROUND_LAYER))
-        {
-            rb.AddForce(Vector2.up * jumpPower);
-        }
 
         anim.SetFloat("SpeedY", rb.velocity.y);
         anim.SetFloat("SpeedX", speed);
